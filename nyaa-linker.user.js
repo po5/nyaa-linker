@@ -72,6 +72,9 @@ if (typeof GM_registerMenuCommand !== 'undefined') {
         settingsPanel.style.border = '1px solid var(--clrAccent, hsl(210, 100%, 60%))';
         settingsPanel.style.zIndex = '10000';
         settingsPanel.style.overflow = 'hidden';
+        settingsPanel.style.fontFamily = 'Verdana, Arial';
+        settingsPanel.style.fontSize = '11px';
+        settingsPanel.style.lineHeight = '16px';
 
         settingsPanel.innerHTML = `
             <style>
@@ -80,6 +83,14 @@ if (typeof GM_registerMenuCommand !== 'undefined') {
                     --clrLight: hsl(0, 0%, 87%);
                     --clrAccent: hsl(210, 100%, 60%);
                 }
+                #nyaa-linker-settings,
+                #nyaa-linker-settings::before,
+                #nyaa-linker-settings::after,
+                #nyaa-linker-settings *,
+                #nyaa-linker-settings *::before,
+                #nyaa-linker-settings *::after {
+                    all: revert;
+                }
                 #nyaa-linker-settings *,
                 #nyaa-linker-settings *::before,
                 #nyaa-linker-settings *::after {
@@ -87,7 +98,7 @@ if (typeof GM_registerMenuCommand !== 'undefined') {
                     margin: 0;
                     padding: 0;
                     border: none;
-                    font-size: 1rem;
+                    font-size: 11px;
                 }
                 #nyaa-linker-settings-parametersPage,
                 #nyaa-linker-settings-settingsPage {
