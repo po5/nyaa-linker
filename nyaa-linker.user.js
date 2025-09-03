@@ -256,7 +256,7 @@ if (typeof GM_registerMenuCommand !== 'undefined') {
             GM_setValue('settings', newSettings);
             settings = newSettings;
             settingsPanel.remove();
-            document.querySelectorAll('.nyaaBtn').forEach((e) => e.remove())
+            document.querySelectorAll('.nyaaBtn').forEach((e) => e.remove());
             init();
         };
     });
@@ -636,6 +636,7 @@ getValue('settings', defaultSettings).then((v) => {
     const observer = new MutationObserver(() => {
         if (window.location.href.split('/')[4] !== currentPage) {
             currentPage = window.location.href.split('/')[4];
+            document.querySelectorAll('.nyaaBtn').forEach((e) => e.remove());
             init();
         }
     });
