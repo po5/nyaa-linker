@@ -11,7 +11,7 @@
         -   For Manga pages, the Category setting will search for the "Literature" equivalent
     -   The bottom settings are used to change userscript behavior
         -   The Hotkey can be used to search _(even when "Hide Button" is enabled)_
-    -   The current browser tab will refresh after pressing the save button
+    -   New settings will be re-applied to the current tab after pressing the save button
 
 -   Additional Query types are available: _"Default" combines "Exact" and "Base"_.
 

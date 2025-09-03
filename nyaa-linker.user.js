@@ -13,7 +13,7 @@
 // @match        *://*.livechart.me/*
 // @grant        GM.getValue
 // @grant        GM.setValue
-// @grant        GM_registerMenuCommand
+// @grant        GM.registerMenuCommand
 // @grant        GM_getValue
 // @grant        GM_setValue
 // @grant        GM_registerMenuCommand
@@ -28,10 +28,10 @@ if (typeof GM_getValue === 'undefined' && typeof GM !== 'undefined') {
     self.GM_registerMenuCommand = GM.registerMenuCommand;
     getValue = GM.getValue;
 } else {
-    getValue = function(key, init) {
+    getValue = function(key, fallback) {
         return new Promise(function(resolve, reject) {
             try {
-                resolve(GM_getValue(key, init));
+                resolve(GM_getValue(key, fallback));
             }
             catch(e) {
                 reject(e);
@@ -243,17 +243,17 @@ if (typeof GM_registerMenuCommand !== 'undefined') {
                 hotkey_query_setting: document.getElementById('hotkey_query_select').value,
             };
             GM_setValue('settings', newSettings);
-            settings = newSettings; // TODO
+            settings = newSettings;
             settingsPanel.remove();
-            location.reload();
+            document.querySelectorAll('.nyaaBtn').forEach((e) => e.remove())
+            init();
         };
     });
 }
 
-let btn, currentPage, previousPage, hotkeyListener;
+let btn, currentPage, hotkeyListener;
 
 function init() {
-    previousPage = currentPage;
     searchNyaa(settings);
 }
 
@@ -576,6 +576,14 @@ function getBaseTitle(baseTitle) {
 
 const awaitLoadOf = (selector, text, func) => {
     return new Promise((resolve) => {
+        const elmspre = document.querySelectorAll(selector);
+        elmspre.forEach((elm) => {
+            if (elm.textContent.includes(text)) {
+                resolve(elm);
+                func();
+                return;
+            }
+        });
         const mutObs = new MutationObserver(() => {
             const elms = document.querySelectorAll(selector);
             elms.forEach((elm) => {
@@ -583,6 +591,7 @@ const awaitLoadOf = (selector, text, func) => {
                     resolve(elm);
                     mutObs.disconnect();
                     func();
+                    return;
                 }
             });
         });
