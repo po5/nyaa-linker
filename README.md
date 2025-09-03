@@ -23,3 +23,7 @@
 
 -   "Default" search example: clicking the button on [Shingeki no Kyojin Season 3 Part 2](https://myanimelist.net/anime/38524/Shingeki_no_Kyojin_Season_3_Part_2) will search Nyaa for:
     -   _"Shingeki no Kyojin Season 3 Part 2"|"Attack on Titan Season 3 Part 2"|"Shingeki no Kyojin"|"Attack on Titan"_
+
+To bring up the settings, click on the menu item from your userscript manager.
+
+![](https://github.com/user-attachments/assets/cc1aabb6-55e3-45d4-bbcf-60398f175d5e)
