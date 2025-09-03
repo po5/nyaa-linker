@@ -587,22 +587,26 @@ function getBaseTitle(baseTitle) {
 
 const awaitLoadOf = (selector, text, func) => {
     return new Promise((resolve) => {
+        let found = false;
         const elmspre = document.querySelectorAll(selector);
         elmspre.forEach((elm) => {
+            if (found) return;
             if (elm.textContent.includes(text)) {
+                found = true;
                 resolve(elm);
                 func();
-                return;
             }
         });
+        if (found) return;
         const mutObs = new MutationObserver(() => {
             const elms = document.querySelectorAll(selector);
             elms.forEach((elm) => {
+                if (found) return;
                 if (elm.textContent.includes(text)) {
+                    found = true;
                     resolve(elm);
                     mutObs.disconnect();
                     func();
-                    return;
                 }
             });
         });
