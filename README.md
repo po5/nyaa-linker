@@ -1,5 +1,7 @@
 ![](https://i.imgur.com/DXMg8ha.png)
 
+## [Click to install](https://github.com/po5/nyaa-linker-userscript/raw/refs/heads/main/nyaa-linker.user.js)
+
 ## What the Userscript Does
 
 -   Adds a "Search on Nyaa" Button to Anime and Manga database pages
