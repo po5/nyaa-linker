@@ -270,7 +270,7 @@ function init() {
 
 function searchNyaa(settings) {
     const domain = window.location.href;
-    const media = window.location.pathname.includes('manga') ? 'manga' : 'anime';
+    let media = window.location.pathname.includes('manga') ? 'manga' : 'anime';
     let titleJap, titleEng, btnSpace, cardType, cardFlag, isSpicy;
     let categorySetting = settings.category_setting;
     let queryType = settings.query_setting;
@@ -329,6 +329,8 @@ function searchNyaa(settings) {
 
     switch (true) {
         case domain.includes(`myanimelist.net`):
+            media = window.location.href.split('/')[3];
+            categorySetting = setCategory(settings.category_setting);
             const malMain = new RegExp(`myanimelist\\.net/${media}/\\d+`);
             if (malMain.test(domain)) {
                 const engCheck = document.querySelector('.title-english');
@@ -376,7 +378,9 @@ function searchNyaa(settings) {
             }
             break;
 
-        case domain.includes(`anime-planet.com/${media}/`) && domain !== `https://www.anime-planet.com/${media}/`:
+        case (domain.includes(`anime-planet.com/anime/`) || domain.includes(`anime-planet.com/manga/`)) && domain.split("/").pop() !== '':
+            media = window.location.href.split('/')[3];
+            categorySetting = setCategory(settings.category_setting);
             const skipPages = ['all', 'top-', 'recommendations', 'tags'];
             let skipExtra =
                 media == 'anime' ? ['seasons', 'watch-online', 'studios'] : ['read-online', 'publishers', 'magazines', 'webtoons', 'light-novels'];
@@ -400,7 +404,9 @@ function searchNyaa(settings) {
             }, 50);
             break;
 
-        case domain.includes(`animenewsnetwork.com/encyclopedia/${media}.php?id=`):
+        case domain.includes(`animenewsnetwork.com/encyclopedia/anime.php?id=`) || domain.includes(`animenewsnetwork.com/encyclopedia/manga.php?id=`):
+            media = domain.includes(`animenewsnetwork.com/encyclopedia/anime.php?id=`) ? 'anime' : 'manga';
+            categorySetting = setCategory(settings.category_setting);
             setTimeout(() => {
                 titleEng = document.getElementById('page_header').innerText.split(' (').shift();
                 for (const altTitle of document.querySelectorAll('#infotype-2 > .tab')) {
@@ -424,7 +430,9 @@ function searchNyaa(settings) {
             }, 50);
             break;
 
-        case domain.includes(`anidb.net/${media}/`):
+        case domain.includes(`anidb.net/anime/`) || domain.includes(`anidb.net/manga/`):
+            media = window.location.href.split('/')[3];
+            categorySetting = setCategory(settings.category_setting);
             const hasID = /anidb\.net\/\w+\/(\d+)/;
             if (domain.match(hasID)) {
                 titleJap = document.querySelector(".value > [itemprop='name']").textContent;
@@ -443,7 +451,9 @@ function searchNyaa(settings) {
             }
             break;
 
-        case domain.includes(`anilist.co/${media}/`):
+        case domain.includes(`anilist.co/anime/`) || domain.includes(`anilist.co/manga/`):
+            media = window.location.href.split('/')[3];
+            categorySetting = setCategory(settings.category_setting);
             awaitLoadOf('.sidebar .type', 'Romaji', () => {
                 for (const data of document.getElementsByClassName('type')) {
                     const setTitle = data.parentNode.children[1].textContent;
@@ -465,7 +475,9 @@ function searchNyaa(settings) {
             });
             break;
 
-        case domain.includes(`kitsu.app/${media}/`):
+        case domain.includes(`kitsu.app/anime/`) || domain.includes(`kitsu.app/manga/`):
+            media = window.location.href.split('/')[3];
+            categorySetting = setCategory(settings.category_setting);
             awaitLoadOf('.media--information', 'Status', () => {
                 let titleUsa;
                 document.querySelector('a.more-link')?.click();
@@ -493,6 +505,8 @@ function searchNyaa(settings) {
             break;
 
         case domain.includes('livechart.me'):
+            media = "anime";
+            categorySetting = setCategory(settings.category_setting);
             if (domain.includes(`livechart.me/${media}/`)) {
                 titleJap = document.querySelector('.grow .text-xl').innerText;
                 titleEng = document.querySelector('.grow .text-lg').innerText;
